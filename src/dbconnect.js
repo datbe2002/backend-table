@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-var Manager = require('./models/manager.js')
+var Manager = require("./models/manager.js");
 
 async function connect() {
   try {
@@ -15,7 +15,8 @@ async function connect() {
         address: "tesstttt",
         status: false,
         role: 2,
-      },{
+      },
+      {
         name: "nam rat dep trai",
         phone: 12312354,
         email: "namhuynh2610@gmail.com",
@@ -25,8 +26,8 @@ async function connect() {
         role: 1,
       },
     ];
-    const insertedData = await Manager.insertMany(exampleManager)
-    console.log('Example data inserted:', insertedData);
+    const insertedData = await Manager.insertMany(exampleManager);
+    console.log("Example data inserted:", insertedData);
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);
   }
