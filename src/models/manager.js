@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const managerSchema = new Schema({
+const managerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -34,4 +34,5 @@ const managerSchema = new Schema({
 });
 
 var Manager = mongoose.model("Manager", managerSchema);
-module.export = Manager;
+
+module.exports = Manager;
