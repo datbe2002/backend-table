@@ -34,4 +34,4 @@ const managerSchema = new Schema({
 });
 
 var Manager = mongoose.model("Manager", managerSchema);
-module.export = Manager;
+module.exports = Manager;
