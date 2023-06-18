@@ -1,7 +1,7 @@
 // const mongoose = require("mongoose");
 // const Schema = mongoose.Schema;
 
-// const tableSchema = new Schema({
+// const tableSchema = new mongoose.Schema({
 //   positionId: {
 //     type: String,
 //     required: true,

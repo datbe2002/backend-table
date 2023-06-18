@@ -1,7 +1,7 @@
 // const mongoose = require("mongoose");
 // const Schema = mongoose.Schema;
 
-// const positionSchema = new Schema({
+// const positionSchema = new mongoose.Schema({
 //   position: {
 //     type: String,
 //     required: true,

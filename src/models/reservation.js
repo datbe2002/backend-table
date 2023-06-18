@@ -1,7 +1,7 @@
 // const mongoose = require("mongoose");
 // const Schema = mongoose.Schema;
 
-// const reservationSchema = new Schema({
+// const reservationSchema = new mongoose.Schema({
 //   userId: {
 //     type: String,
 //     required: true,
@@ -25,4 +25,4 @@
 // });
 
 // var Reservation = mongoose.model("Reservation", reservationSchema);
-// module.export = Reservation;
+// module.exports = Reservation;
