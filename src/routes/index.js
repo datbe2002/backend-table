@@ -3,17 +3,16 @@ const express = require("express");
 const router = express.Router();
 
 import managerRoute from './managerRoute'
-import customerRoute from './customerRoute'
 
 const routesIndex = [
   {
     path: "/manager",
     route: managerRoute,
   },
-  {
-    path: '/customer',
-    route: customerRoute
-  }
+  // {
+  //   path: '/customer',
+  //   route: customerRoute
+  // }
 
 ];
 
