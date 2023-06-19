@@ -4,6 +4,7 @@ const router = express.Router();
 
 import managerRoute from './managerRoute'
 import tableRoute from './tableRoute'
+import customerRoute from './customerRoute'
 
 const routesIndex = [
   {
@@ -11,8 +12,12 @@ const routesIndex = [
     route: managerRoute,
   },
   {
-    path: '/table',
-    route: tableRoute
+    path: "/table",
+    route: tableRoute,
+  },
+  {
+    path: '/customer',
+    route: customerRoute
   }
 
 ];
