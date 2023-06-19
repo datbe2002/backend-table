@@ -80,7 +80,7 @@ const handleCreateNewManager = async (req, res) => {
         const hashPass = await hashPassword(manager.password);
 
         const newManager = new Manager({
-            name: manager.name,
+            username: manager.username,
             phone: manager.phone,
             email: manager.email,
             password: hashPass,
