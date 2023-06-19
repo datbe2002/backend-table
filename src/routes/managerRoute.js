@@ -8,6 +8,6 @@ router.get("/", managerController.getAllManager);
 router.get("/:_id", managerController.getAllManagerBYid);
 router.post("/create", adminAuth, managerController.regisNewManager);
 router.post("/delete/:_id", adminAuth, managerController.deleteManager);
-router.post("/update/:_id", adminAuth, managerController.updateManager);
+router.put("/update/:_id", adminAuth, managerController.updateManager);
 router.post("/login", managerController.loginManager)
 module.exports = router;

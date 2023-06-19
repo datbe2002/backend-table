@@ -75,12 +75,12 @@ const handleCreateNewManager = async (req, res) => {
         const manager = req.body
         const managerExisted = await managerRepository.getManagerByEmail(manager.email)
         if (managerExisted) {
-            throw new ApiError(httpStatus.NOT_FOUND, "Email already taken")
+            throw new ApiError(httpStatus.CONFLICT, "Email already taken")
         }
         const hashPass = await hashPassword(manager.password);
 
         const newManager = new Manager({
-            name: manager.name,
+            username: manager.username,
             phone: manager.phone,
             email: manager.email,
             password: hashPass,
@@ -98,6 +98,10 @@ const handleUpdateManager = async (req, res) => {
     try {
         const id = req.params._id
         const obj = req.body
+        const found = await managerRepository.getManagerById(id)
+        if (!found) {
+            throw new ApiError(httpStatus.NOT_FOUND, "Id not found")
+        }
         await managerRepository.updateManager(id, obj)
     } catch (error) {
         throw (error)
