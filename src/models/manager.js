@@ -7,9 +7,8 @@ const managerSchema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
-    required: true,
-    unique: true,
+    type: String,
+    require: false,
   },
   email: {
     type: String,
@@ -21,16 +20,20 @@ const managerSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: true,
   },
   status: {
     type: Boolean,
     required: true,
+    default: true,
   },
   role: {
-    type: Number,
-    required: true,
+    type: String,
+    enum: ['Admin', 'Manager'],
+    default: 'Manager'
   },
+}, {
+  timestamps: true,
+  versionKey: false
 });
 
 var Manager = mongoose.model("Manager", managerSchema);
