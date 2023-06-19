@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const managerSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
   },
@@ -20,6 +20,7 @@ const managerSchema = new mongoose.Schema({
   },
   address: {
     type: String,
+    require: false,
   },
   status: {
     type: Boolean,
@@ -31,6 +32,13 @@ const managerSchema = new mongoose.Schema({
     enum: ['Admin', 'Manager'],
     default: 'Manager'
   },
+  changedReservation: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Managerhasreservation",
+    }
+  ]
+
 }, {
   timestamps: true,
   versionKey: false
