@@ -1,28 +1,25 @@
-// const mongoose = require("mongoose");
-// const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-// const tableSchema = new mongoose.Schema({
-//   positionId: {
-//     type: String,
-//     required: true,
-//   },
-//   reservationId: {
-//     type: String,
-//     required: true,
-//   },
-//   reservationUserId: {
-//     type: String,
-//     required: true,
-//   },
-//   status: {
-//     type: String,
-//     required: true,
-//   },
-//   numOfChair: {
-//     type: Number,
-//     required: true,
-//   },
-// });
+const tableSchema = new mongoose.Schema({
+    position: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Position",
+    },
+    reservation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reservation",
+    },
+    status: {
+        type: Boolean,
+        required: true,
+    },
+    numOfChair: {
+        type: Number,
+        enum: [2, 4, 6, 8, 10],
+        required: true,
+    },
+});
 
-// var Table = mongoose.model("Table", tableSchema);
-// module.exports = Table;
+var Table = mongoose.model("Table", tableSchema);
+module.exports = Table;
