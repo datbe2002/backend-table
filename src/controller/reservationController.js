@@ -10,12 +10,22 @@ const placeTable = async (req, res, next) => {
     }
 }
 
-const sth = async (req, res, next) => {
+const getAllReservationsUserIdStatus = async (req, res, next) => {
     try {
-        const { id } = req.body
-        const reservation = await reservationRepository.checkTableForSlot(id)
+        const { status } = req.body
+        const { _userId } = req.params
+        const allReservations = await reservationRepository.getAllReservationsByUserIdAndStatus(status, _userId)
+        res.status(200).json({ message: 'success', allReservations })
+    } catch (error) {
+        next(error)
+    }
+}
 
-        res.status(200).json({ message: 'success' })
+const getAllReservationsByUserId = async (req, res, next) => {
+    try {
+        const { _userId } = req.params
+        const allReservations = await reservationRepository.getReservationsByUser(_userId)
+        res.status(200).json({ message: 'success', allReservations })
     } catch (error) {
         next(error)
     }
@@ -23,5 +33,6 @@ const sth = async (req, res, next) => {
 
 module.exports = {
     placeTable,
-    sth
+    getAllReservationsUserIdStatus,
+    getAllReservationsByUserId
 }

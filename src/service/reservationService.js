@@ -9,7 +9,6 @@ const checkingReservation = async (req, res) => {
     try {
         const { noSlot, date, time, position, note, _id } = req.body
 
-
         const tableByPosition = await tableRepository.tableByPosition(position)
 
         if (tableByPosition.length < 1) {
@@ -17,7 +16,6 @@ const checkingReservation = async (req, res) => {
         }
 
         tableByPosition.sort((a, b) => a.numOfChair - b.numOfChair)
-
 
         let assginTable = null;
 
@@ -34,7 +32,7 @@ const checkingReservation = async (req, res) => {
             throw new ApiError(httpStatus.NOT_FOUND, "No table found")
         }
 
-        console.log(assginTable)
+        const totalPriceBySlot = noSlot * assginTable.baseDeposit
 
         const datetimeConvert = convertDateTime(date, time)
 
@@ -46,15 +44,12 @@ const checkingReservation = async (req, res) => {
             slot: noSlot,
             position: position,
             table: assginTable,
+            price: totalPriceBySlot
         })
 
         await newRes.save()
         return newRes
 
-
-        // const idReservation = newRes._id
-        // const idTable = assginTable._id
-        // await Table.updateOne({ _id: idTable }, { $set: { reservation: idReservation } })
     } catch (error) {
         throw error
     }

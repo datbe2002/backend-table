@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const reservationSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Customer",
     },
     dateTime: {
         type: Date,
@@ -32,6 +32,10 @@ const reservationSchema = new mongoose.Schema({
     table: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Table",
+    },
+    price: {
+        type: Number,
+        required: true,
     }
 }, {
     timestamps: true,
