@@ -1,3 +1,4 @@
+import { getTableByPosition } from "../repository/tableRepository";
 import managerService from "../service/managerService"
 const httpStatus = require("http-status");
 const { ApiError } = require("../middleware/apiError");

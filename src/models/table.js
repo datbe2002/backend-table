@@ -3,12 +3,15 @@ const Schema = mongoose.Schema;
 
 const tableSchema = new mongoose.Schema({
     position: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Position",
+        type: String,
+        required: true,
+        enum: ['Outdoor', 'Inside', 'Upstair'],
+        default: 'Inside'
     },
-    reservation: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reservation",
+    baseDeposit: {
+        type: Number,
+        required: true,
+        default: 20000
     },
     status: {
         type: Boolean,

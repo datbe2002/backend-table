@@ -32,13 +32,6 @@ const managerSchema = new mongoose.Schema({
     enum: ['Admin', 'Manager'],
     default: 'Manager'
   },
-  changedReservation: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Managerhasreservation",
-    }
-  ]
-
 }, {
   timestamps: true,
   versionKey: false

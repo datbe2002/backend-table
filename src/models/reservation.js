@@ -10,32 +10,32 @@ const reservationSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    createTime: {
-        type: Date,
+    position: {
+        type: String,
         required: true,
+        enum: ['Outdoor', 'Inside', 'Upstair'],
     },
     status: {
-        type: Boolean,
+        type: String,
         required: true,
+        enum: ['Pending', 'Ongoing', 'Success', 'Cancelled'],
+        default: 'Pending'
     },
     slot: {
         type: Number,
         required: true,
     },
-    changedReservation: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Managerhasreservation",
-        }
-    ],
-    availableTime: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "availableTime",
+    note: {
+        type: String,
+        required: false,
     },
-    table: [{
+    table: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Table",
-    }]
+    }
+}, {
+    timestamps: true,
+    versionKey: false
 });
 
 var Reservation = mongoose.model("Reservation", reservationSchema);
