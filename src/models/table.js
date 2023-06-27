@@ -2,13 +2,20 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const tableSchema = new mongoose.Schema({
-    position: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Position",
+    name: {
+        type: String,
+        required: true,
     },
-    reservation: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reservation",
+    position: {
+        type: String,
+        required: true,
+        enum: ['Outdoor', 'Inside', 'Upstair'],
+        default: 'Inside'
+    },
+    baseDeposit: {
+        type: Number,
+        required: true,
+        default: 20000
     },
     status: {
         type: Boolean,

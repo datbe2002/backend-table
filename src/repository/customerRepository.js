@@ -20,8 +20,8 @@ const deleteCustomerById = async (id) => {
 };
 
 const updateCustomer = async (id, obj) => {
-    console.log(id);
-    console.log(obj);
+  console.log(id);
+  console.log(obj);
   return await Customer.findByIdAndUpdate(
     id,
     {
