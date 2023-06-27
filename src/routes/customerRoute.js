@@ -10,5 +10,8 @@ router.get("/:_id", customerController.getCustomerById);
 router.post("/login", customerController.loginCustomer);
 router.post("/register", customerController.regisNewCustomer);
 router.put("/update/:_id", customerController.updateCustomer);
+router.post("/forgotpassword", customerController.forgotPassword);
+router.put("/reset-password/:resetToken",customerController.resetPassword)
+// router.post("/delete/:_id", customerController.deleteCustomer);
 
 module.exports = router;
