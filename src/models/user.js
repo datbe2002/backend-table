@@ -23,6 +23,10 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    resetToken: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
@@ -30,5 +34,5 @@ const customerSchema = new mongoose.Schema(
   }
 );
 
-var Customer = mongoose.model("Customer", customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
 module.exports = Customer;

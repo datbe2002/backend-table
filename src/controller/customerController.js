@@ -1,6 +1,8 @@
+import Customer from "../models/user";
 import customerService from "../service/customerService";
 const httpStatus = require("http-status");
 const { ApiError } = require("../middleware/apiError");
+const sendMail = require("../middleware/sendMail");
 
 const loginCustomer = async (req, res, next) => {
   try {
@@ -74,6 +76,63 @@ const updateCustomer = async (req, res, next) => {
   }
 };
 
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const customerMailCheck = await customerService.handleGetCustomerByMail(
+      email
+    );
+    if (!customerMailCheck) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Email not found");
+    }
+    const resetToken = customerService.generateResetToken();
+    await customerService.saveResetToken(email, resetToken);
+
+    const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. <a href=${process.env.URL_SERVER}/api/customer/reset-password/${resetToken}>Click here</a>`;
+
+    const data = {
+      email,
+      html,
+    };
+
+    const rs = await sendMail(data);
+    return res.status(200).json({
+      success: true,
+      rs,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+    const { resetToken } = req.params;
+
+    if (!password) {
+      throw new Error("Missing inputs");
+    }
+
+    const customer = await Customer.findOne({ resetToken });
+    if (!customer) {
+      throw new Error("Invalid reset token");
+    }
+
+    customer.password = await customerService.hashPassword(password);
+    customer.resetToken = undefined; // Remove the reset token from the customer's record
+    await customer.save();
+
+    return res.status(200).json({
+      success: customer ? true : false,
+      mes: customer ? "Update password" : "Something went wrong",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 module.exports = {
   getAllCustomer,
   getCustomerById,
@@ -81,4 +140,6 @@ module.exports = {
   deleteCustomer,
   loginCustomer,
   updateCustomer,
+  forgotPassword,
+  resetPassword,
 };

@@ -1,8 +1,9 @@
 const httpStatus = require("http-status");
 const { ApiError } = require("../middleware/apiError");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-require('dotenv').config()
+require("dotenv").config();
 
 import customerRepository from "../repository/customerRepository";
 import Customer from "../models/user";
@@ -28,6 +29,27 @@ const genAuthToken = async (customer) => {
     expiresIn: "1d",
   });
   return token;
+};
+
+const genRefreshToken = async (customer) => {
+  const customerObj = {
+    id: customer._id,
+    email: customer.email,
+  };
+  const token = jwt.sign(customerObj, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "3d",
+  });
+  return token;
+};
+
+const generateResetToken = () => {
+  const token = crypto.randomBytes(32).toString("hex");
+  return token;
+};
+
+const saveResetToken = async (email, token) => {
+
+  await Customer.findOneAndUpdate({ email: email }, { resetToken: token });
 };
 
 const signInWithEmailPassword = async (email, password) => {
@@ -73,7 +95,6 @@ const handleGetCustomerById = async (id) => {
 const handleCreateNewCustomer = async (req, res) => {
   try {
     const customer = req.body;
-    console.log(req.body);
     const customerExisted = await customerRepository.getCustomerByEmail(
       customer.email
     );
@@ -114,24 +135,26 @@ const handleDeleteCustomer = async (req, res) => {
   }
 };
 
-// const handleLogin = async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-
-//     const dataCallFromdb = await customerRepository.findOne();
-//     //lam login tai day
-
-//     return dataCallFromdb;
-//   } catch (error) {}
-// };
+const handleGetCustomerByMail = async (email) => {
+  try {
+    const customerMailCheck = customerRepository.getCustomerByEmail(email);
+    return customerMailCheck;
+  } catch (error) {
+    throwerror;
+  }
+};
 
 module.exports = {
-  //   handleLogin,
   handleGetAllCustomer,
   handleGetCustomerById,
   handleCreateNewCustomer,
   handleDeleteCustomer,
   signInWithEmailPassword,
   genAuthToken,
+  genRefreshToken,
+  saveResetToken,
+  generateResetToken,
   handleUpdateCustomer,
+  handleGetCustomerByMail,
+  hashPassword
 };
