@@ -22,10 +22,48 @@ const getReservationsByUser = async (id) => {
     return reservations
 }
 
+const getReserservationById = async (id) => {
+    const reser = await Reservation.findById(id)
+    return reser
+}
+
+const dateChecking = async (dateUser) => {
+    try {
+        console.log("27 " + dateUser)
+        const startOfDay = new Date(dateUser);
+        startOfDay.setUTCHours(0, 0, 0, 0);
+
+        const endOfDay = new Date(dateUser);
+        endOfDay.setUTCHours(23, 59, 59, 999);
+
+        const reservations = await Reservation.find({
+            dateTime: {
+                $gte: startOfDay,
+                $lte: endOfDay
+            }
+        });
+
+        console.log("hello from repo" + reservations)
+
+        const matchingReservations = reservations.some((reservation) => {
+            const reservationDate = new Date(reservation.dateTime);
+
+            console.log(reservationDate.getTime() === dateUser.getTime())
+            return reservationDate.getTime() === dateUser.getTime();
+        });
+
+        return matchingReservations;
+
+    } catch (error) {
+        throw error
+    }
+}
 
 
 module.exports = {
     getAllReservationsByUserIdAndStatus,
     checkTableForSlot,
-    getReservationsByUser
+    getReservationsByUser,
+    getReserservationById,
+    dateChecking
 }

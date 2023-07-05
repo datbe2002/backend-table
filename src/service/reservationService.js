@@ -11,6 +11,12 @@ const checkingReservation = async (req, res) => {
 
         const tableByPosition = await tableRepository.tableByPosition(position)
 
+        const datetimeConvert = convertDateTime(date, time)
+
+        // const dateCheckForSlot = await reservationRepository.dateChecking(datetimeConvert)
+
+        // console.log(dateCheckForSlot)
+
         if (tableByPosition.length < 1) {
             throw new ApiError(httpStatus.NOT_FOUND, "Not found any available table")
         }
@@ -34,9 +40,9 @@ const checkingReservation = async (req, res) => {
 
         const totalPriceBySlot = noSlot * assginTable.baseDeposit
 
-        const datetimeConvert = convertDateTime(date, time)
 
         const customer = await customerRepository.getCustomerById(_id);
+
         const newRes = new Reservation({
             user: customer,
             dateTime: datetimeConvert,
@@ -48,6 +54,7 @@ const checkingReservation = async (req, res) => {
         })
 
         await newRes.save()
+
         return newRes
 
     } catch (error) {
@@ -59,11 +66,11 @@ const checkingReservation = async (req, res) => {
 const convertDateTime = (dateString, timeString) => {
     const [day, month, year] = dateString.split('/');
     const [hours, minutes] = timeString.split(':');
-
     const dateTime = new Date(year, month - 1, day, hours, minutes);
-
     return dateTime
 }
+
+
 
 
 module.exports = {
