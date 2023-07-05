@@ -23,8 +23,22 @@ const getReservationsByUser = async (id) => {
 }
 
 const getReserservationById = async (id) => {
-    const reser = await Reservation.findById(id)
+    const reser = await Reservation.findById(id).populate('table', ['name'])
     return reser
+}
+
+const clearTableForNextPlacement = async (id) => {
+    return Reservation.updateOne({ _id: id }, {
+        $unset: { table: null },
+        $set: { status: "Success" }
+    })
+}
+
+const cancelTableForNextPlacement = async (id) => {
+    return Reservation.updateOne({ _id: id }, {
+        $unset: { table: null },
+        $set: { status: "Cancelled" }
+    })
 }
 
 const dateChecking = async (dateUser) => {
@@ -65,5 +79,7 @@ module.exports = {
     checkTableForSlot,
     getReservationsByUser,
     getReserservationById,
-    dateChecking
+    dateChecking,
+    clearTableForNextPlacement,
+    cancelTableForNextPlacement
 }

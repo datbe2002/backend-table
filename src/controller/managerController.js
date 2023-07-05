@@ -1,4 +1,3 @@
-import { getTableByPosition } from "../repository/tableRepository";
 import managerService from "../service/managerService"
 const httpStatus = require("http-status");
 const { ApiError } = require("../middleware/apiError");
@@ -71,7 +70,25 @@ const updateManager = async (req, res, next) => {
     }
 }
 
+const clearTableForNextPlacement = async (req, res, next) => {
+    try {
+        await managerService.handleClearTableForNextPlacement(req, res)
+        res.status(200).json({ message: "Clear table successfully" })
+    } catch (error) {
+        next(error)
 
+    }
+}
+
+const cancelTableForNextPlacement = async (req, res, next) => {
+    try {
+        await managerService.handleCancelTableForNextPlacement(req, res)
+        res.status(200).json({ message: "Cancel table successfully" })
+    } catch (error) {
+        next(error)
+
+    }
+}
 
 module.exports = {
     getAllManager,
@@ -79,5 +96,7 @@ module.exports = {
     regisNewManager,
     deleteManager,
     loginManager,
-    updateManager
+    updateManager,
+    clearTableForNextPlacement,
+    cancelTableForNextPlacement
 }

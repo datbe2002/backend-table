@@ -6,6 +6,7 @@ require("dotenv").config();
 
 import Manager from "../models/manager";
 import managerRepository from "../repository/managerRepository"
+import reservationRepository from "../repository/reservationRepository"
 
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -117,6 +118,28 @@ const handleDeleteManager = async (req, res) => {
     }
 }
 
+const handleClearTableForNextPlacement = async (req, res) => {
+    try {
+        const { _reservationId } = req.params
+        const clear = await reservationRepository.clearTableForNextPlacement(_reservationId)
+        return clear
+    } catch (error) {
+        throw error
+
+    }
+}
+
+const handleCancelTableForNextPlacement = async (req, res) => {
+    try {
+        const { _reservationId } = req.params
+        const clear = await reservationRepository.cancelTableForNextPlacement(_reservationId)
+        return clear
+    } catch (error) {
+        throw error
+
+    }
+}
+
 module.exports = {
     handleGetAllManager,
     handleGetManagerById,
@@ -124,5 +147,7 @@ module.exports = {
     handleDeleteManager,
     signInWithEmailPassword,
     genAuthToken,
-    handleUpdateManager
+    handleUpdateManager,
+    handleClearTableForNextPlacement,
+    handleCancelTableForNextPlacement
 }

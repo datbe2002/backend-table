@@ -27,6 +27,7 @@ const updateManager = async (id, obj) => {
         { new: true })
 }
 
+
 module.exports = {
     getAll,
     getManagerById,

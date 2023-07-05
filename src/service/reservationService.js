@@ -9,6 +9,9 @@ const checkingReservation = async (req, res) => {
     try {
         const { noSlot, date, time, position, note, _id } = req.body
 
+
+
+
         const tableByPosition = await tableRepository.tableByPosition(position)
 
         const datetimeConvert = convertDateTime(date, time)
