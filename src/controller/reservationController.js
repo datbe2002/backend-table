@@ -43,9 +43,21 @@ const getReserservationById = async (req, res, next) => {
     }
 }
 
+const getAllReservations = async (req, res, next) => {
+    try {
+        const reservation = await reservationRepository.getAllReservations()
+        res.status(200).json({ message: 'success', reservation })
+
+    } catch (error) {
+        next(error)
+
+    }
+}
+
 module.exports = {
     placeTable,
     getAllReservationsUserIdStatus,
     getAllReservationsByUserId,
-    getReserservationById
+    getReserservationById,
+    getAllReservations
 }
