@@ -34,6 +34,16 @@ const getAllCustomer = async (req, res, next) => {
   }
 };
 
+const updatePasswordCustomer = async (req, res, next) => {
+  try {
+    const passUpdate = await customerService.handleUpdatePasswordCustomer(req, res)
+    return passUpdate
+  } catch (error) {
+    next(error);
+
+  }
+}
+
 const getCustomerById = async (req, res, next) => {
   try {
     const customer = await customerService.handleGetCustomerById(
@@ -69,8 +79,8 @@ const deleteCustomer = async (req, res, next) => {
 
 const updateCustomer = async (req, res, next) => {
   try {
-    await customerService.handleUpdateCustomer(req, res);
-    res.status(200).json({ message: "Update customer successfully" });
+    const updated = await customerService.handleUpdateCustomer(req, res);
+    res.status(200).json({ message: "Update customer successfully", customer: updated });
   } catch (error) {
     next(error);
   }
@@ -142,4 +152,5 @@ module.exports = {
   updateCustomer,
   forgotPassword,
   resetPassword,
+  updatePasswordCustomer
 };

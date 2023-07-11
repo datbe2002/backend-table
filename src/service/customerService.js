@@ -31,6 +31,30 @@ const genAuthToken = async (customer) => {
   return token;
 };
 
+const handleUpdatePasswordCustomer = async (req, res) => {
+  try {
+    const foundCus = await customerRepository.getCustomerById(req.params.id)
+    console.log(foundCus)
+    if (!foundCus) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Id does not exist");
+    }
+    const match = await comparePassword(req.body.oldPassword, foundCus.password)
+    if (match) {
+      const newPass = await hashPassword(req.body.newPassword)
+      const obj = {
+        password: newPass,
+      }
+      await customerRepository.updateCustomer(req.params.id, obj)
+    } else {
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Password does not match");
+
+    }
+    res.status(200).json({ message: "Password changed" })
+  } catch (error) {
+    throw error
+  }
+}
+
 const genRefreshToken = async (customer) => {
   const customerObj = {
     id: customer._id,
@@ -120,7 +144,9 @@ const handleUpdateCustomer = async (req, res) => {
   try {
     const id = req.params._id;
     const obj = req.body;
-    await customerRepository.updateCustomer(id, obj);
+
+    const newO = await customerRepository.updateCustomer(id, obj);
+    return newO;
   } catch (error) {
     throw error;
   }
@@ -156,5 +182,6 @@ module.exports = {
   generateResetToken,
   handleUpdateCustomer,
   handleGetCustomerByMail,
-  hashPassword
+  hashPassword,
+  handleUpdatePasswordCustomer
 };

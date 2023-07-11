@@ -20,15 +20,14 @@ const deleteCustomerById = async (id) => {
 };
 
 const updateCustomer = async (id, obj) => {
-  console.log(id);
-  console.log(obj);
-  return await Customer.findByIdAndUpdate(
+  const updated = await Customer.findByIdAndUpdate(
     id,
     {
       $set: obj,
     },
     { new: true }
   );
+  return updated
 };
 
 module.exports = {
