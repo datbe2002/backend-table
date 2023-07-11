@@ -12,6 +12,12 @@ const checkTableForSlot = async (tableId) => {
     return !q.length
 }
 
+const deleteReser = async (id) => {
+    console.log(id)
+    const dele = await Reservation.findByIdAndDelete(id)
+    return dele
+}
+
 const getAllReservations = async () => {
     const all = await Reservation.find().populate('user', ['username']).populate('table', ['name'])
     return all
@@ -87,5 +93,6 @@ module.exports = {
     dateChecking,
     clearTableForNextPlacement,
     cancelTableForNextPlacement,
-    getAllReservations
+    getAllReservations,
+    deleteReser
 }

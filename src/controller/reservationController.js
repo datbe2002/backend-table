@@ -54,10 +54,23 @@ const getAllReservations = async (req, res, next) => {
     }
 }
 
+const deleteReservation = async (req, res, next) => {
+    try {
+        console.log(req.params._reservationId)
+        const deletee = await reservationRepository.deleteReser(req.params._reservationId)
+        res.status(200).json({ message: 'Deleted successfully' })
+
+    } catch (error) {
+        next(error)
+
+    }
+}
+
 module.exports = {
     placeTable,
     getAllReservationsUserIdStatus,
     getAllReservationsByUserId,
     getReserservationById,
-    getAllReservations
+    getAllReservations,
+    deleteReservation
 }

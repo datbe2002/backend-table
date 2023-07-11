@@ -7,6 +7,7 @@ router.post("/", reservationController.placeTable);
 router.post("/:_userId", reservationController.getAllReservationsUserIdStatus)
 router.get("/:_userId", reservationController.getAllReservationsByUserId)
 router.get("/", reservationController.getAllReservations)
+router.delete("/delete/:_reservationId", reservationController.deleteReservation)
 router.get("/detail/:_reservationId", reservationController.getReserservationById)
 
 
