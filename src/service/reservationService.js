@@ -16,9 +16,6 @@ const checkingReservation = async (req, res) => {
 
         const datetimeConvert = convertDateTime(date, time)
 
-        // const dateCheckForSlot = await reservationRepository.dateChecking(datetimeConvert)
-
-        // console.log(dateCheckForSlot)
 
         if (tableByPosition.length < 1) {
             throw new ApiError(httpStatus.NOT_FOUND, "Not found any available table")

@@ -15,6 +15,8 @@ const app = express();
 connect()
 app.use(cors());
 
+
+
 //middleware
 app.use(express.json()); // thg nay cho body parser ve JSON
 app.use(express.urlencoded({ extended: true }));

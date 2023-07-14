@@ -34,7 +34,6 @@ const genAuthToken = async (customer) => {
 const handleUpdatePasswordCustomer = async (req, res) => {
   try {
     const foundCus = await customerRepository.getCustomerById(req.params.id)
-    console.log(foundCus)
     if (!foundCus) {
       throw new ApiError(httpStatus.NOT_FOUND, "Id does not exist");
     }

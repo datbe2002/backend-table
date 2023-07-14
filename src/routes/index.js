@@ -6,6 +6,7 @@ import managerRoute from './managerRoute'
 import tableRoute from './tableRoute'
 import customerRoute from './customerRoute'
 import reservationRoute from './reservationRoute'
+import paymentRoute from './paymentRoute'
 
 const routesIndex = [
   {
@@ -23,7 +24,11 @@ const routesIndex = [
   {
     path: '/reservation',
     route: reservationRoute
-  }
+  },
+  {
+    path: '/payment',
+    route: paymentRoute
+  },
 
 ];
 
