@@ -143,7 +143,12 @@ const handleUpdateCustomer = async (req, res) => {
   try {
     const id = req.params._id;
     const obj = req.body;
-
+    const founds = await customerRepository.getAll()
+    for (const found of founds) {
+      if (found.email === obj.email) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Email already taken");
+      }
+    }
     const newO = await customerRepository.updateCustomer(id, obj);
     return newO;
   } catch (error) {
