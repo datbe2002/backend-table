@@ -5,7 +5,7 @@ import paymentController from "../controller/paymentController";
 
 
 router.get('/config', paymentController.getPayment)
-router.post('/create-payment-intent', paymentController.postPayment)
+router.post('/create-payment-intent/:amount', paymentController.postPayment)
 
 
 

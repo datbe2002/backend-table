@@ -20,7 +20,7 @@ const postPayment = async (req, res, next) => {
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             currency: 'VND',
-            amount: req.body.amount,
+            amount: req.params.amount,
             automatic_payment_methods: { enabled: true },
         })
         res.status(200).json({

@@ -13,7 +13,6 @@ const checkTableForSlot = async (tableId) => {
 }
 
 const deleteReser = async (id) => {
-    console.log(id)
     const dele = await Reservation.findByIdAndDelete(id)
     return dele
 }
@@ -54,7 +53,6 @@ const cancelTableForNextPlacement = async (id) => {
 
 const dateChecking = async (dateUser) => {
     try {
-        console.log("27 " + dateUser)
         const startOfDay = new Date(dateUser);
         startOfDay.setUTCHours(0, 0, 0, 0);
 
@@ -68,12 +66,10 @@ const dateChecking = async (dateUser) => {
             }
         });
 
-        console.log("hello from repo" + reservations)
 
         const matchingReservations = reservations.some((reservation) => {
             const reservationDate = new Date(reservation.dateTime);
 
-            console.log(reservationDate.getTime() === dateUser.getTime())
             return reservationDate.getTime() === dateUser.getTime();
         });
 

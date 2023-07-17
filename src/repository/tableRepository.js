@@ -6,7 +6,6 @@ const getAll = async () => {
 }
 
 const tableByPosition = async (position) => {
-    console.log(position)
     const tables = await Table.find({ position: position, status: true })
     return tables
 }
